@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: 'db'
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  port: 5432
+
+development:
+  <<: *default
+  database: raremark_dev
+
+test:
+  <<: *default
+  database: raremark_test
+
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
+  # DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"

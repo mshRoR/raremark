@@ -1,0 +1,52 @@
+FROM ruby:2.7.0
+
+RUN apt-get update -qq && apt-get install -y \
+    sudo nano build-essential apt-transport-https apt-utils libxml2-dev libxslt1-dev
+
+# for nokogiri
+#RUN apt-get install -y libxml2-dev libxslt1-dev
+
+# for a JS runtime
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt-get install -y nodejs
+
+# for yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update -qq && apt-get install -y yarn && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ENV APP_USER="admin" \
+    APP_ROOT="/home/admin/searchapp"
+RUN mkdir -p ${APP_ROOT}
+WORKDIR ${APP_ROOT}
+
+RUN gem update --system && \
+    gem install bundler
+ADD ./admin/Gemfile* ${APP_ROOT}/
+RUN bundle install
+ADD ./admin ${APP_ROOT}
+
+# create app user
+RUN groupadd -r ${APP_USER} -g 1000 && \
+    useradd -u 1000 -r -g ${APP_USER} \
+    -d ${APP_ROOT} \
+    -s /usr/sbin/nologin -c "Docker image user" ${APP_USER} && \
+    echo "${APP_USER} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/${APP_USER} && \
+    chmod 0440 /etc/sudoers.d/${APP_USER} && \
+    chown -R ${APP_USER}:${APP_USER} ${APP_ROOT} && \
+    chown -R ${APP_USER}:${APP_USER} /usr/local/bundle/bin/
+USER ${APP_USER}
+
+#ENTRYPOINT /bin/bash
+#CMD ["true"]
+#CMD puma -C config/puma.rb
+# Expose the port to run the server
+EXPOSE 3001
+
+# change the access mode of entrypoint.sh
+RUN ["chmod", "+x", "entrypoint.sh"]
+
+# Set the entrypoint where the service start
+ENTRYPOINT ./entrypoint.sh

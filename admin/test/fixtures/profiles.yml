@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  gender: 1
+  born_year: 1
+  born_month: 1
+  country: one
+  type: 1
+
+two:
+  gender: 1
+  born_year: 1
+  born_month: 1
+  country: two
+  type: 1

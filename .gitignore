@@ -1,0 +1,52 @@
+# Ignore bundler config.
+/.bundle
+/admin/.bundle
+/search/.bundle
+
+# Ignore all logfiles and tempfiles.
+admin/log/*
+admin/tmp/*
+!/admin/log/.keep
+!/admin/tmp/.keep
+
+search/log/*
+search/tmp/*
+!/search/log/.keep
+!/search/tmp/.keep
+
+# Ignore uploaded files in development.
+admin/storage/*
+search/storage/*
+!/admin/storage/.keep
+!/search/storage/.keep
+
+admin/public/assets
+search/public/assets
+admin/.byebug_history
+search/.byebug_history
+
+# Ignore master key for decrypting credentials and more.
+admin/config/master.key
+search/config/master.key
+
+admin/public/packs
+search/public/packs
+admin/public/packs-test
+search/public/packs-test
+admin/node_modules
+search/node_modules
+admin/yarn-error.log
+search/yarn-error.log
+admin/yarn-debug.log*
+search/yarn-debug.log*
+admin/.yarn-integrity
+search/.yarn-integrity
+
+admin/.bash_history
+search/.bash_history
+admin/.cache
+search/.cache
+admin/.irb_history
+search/.irb_history
+
+/dbdata
