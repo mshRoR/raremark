@@ -5,10 +5,10 @@ class Profile < ApplicationRecord
   validates :gender, presence: true
   validates :born_year, presence: true
   validates :born_month, presence: true
-  validates :type, presence: true
+  validates :profile_type, presence: true
 
-  enum type: {
-    Patient: 1,
-    Carer: 2
+  enum profile_type: {
+    'Patient': 1,
+    'Carer': 2
   }
 end

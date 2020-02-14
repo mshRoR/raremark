@@ -1,7 +1,7 @@
 # search/lib/tasks/model_sync.rake
 namespace :models_sync do
     desc 'Copy common models and tests from admin apps'
-    task :models_copy do
+    task models_copy: :environment do
         source_path = "/home/shajed/raremark/admin/"
         dest_path = "/home/shajed/raremark/search"
 

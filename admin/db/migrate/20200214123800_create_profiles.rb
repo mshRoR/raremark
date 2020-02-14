@@ -7,7 +7,7 @@ class CreateProfiles < ActiveRecord::Migration[6.0]
       t.integer :born_month, comment: 'store user born month'
       t.string :age_range, comment: 'store user age range'
       t.references :country, null: false, foreign_key: true
-      t.integer :type, null: false, default: 0, comment: 'store user type (Patient or Carer)'
+      t.integer :profile_type, null: false, default: 0, comment: 'store user type (Patient or Carer)'
 
       t.timestamps
     end
