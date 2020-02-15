@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-    searchkick
+    searchkick callbacks: false
+
     has_one :profile
     has_many :disease_histories
 

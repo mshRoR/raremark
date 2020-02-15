@@ -7,6 +7,9 @@ services:
       - node.name=elasticsearch
       - cluster.name=es-docker-cluster
       - discovery.type=single-node
+    user: 1000:1001
+#    mode: 0440
+    workdir: /usr/share/elasticsearch/data
     volumes:
       - ./esdata:/usr/share/elasticsearch/data
     networks:
@@ -42,12 +45,14 @@ services:
       - RACK_ENV=development
       - POSTGRES_USER=raremark
       - POSTGRES_PASSWORD=raremark
+      - ELASTICSEARCH_URL=elasticsearch
     volumes: 
       - ./admin:/home/admin/adminapp
     ports: 
       - 3000:3000
     links: 
       - db
+      - elasticsearch
     tty: true
     networks: 
       - raremark
@@ -66,8 +71,7 @@ services:
       - POSTGRES_USER=raremark
       - POSTGRES_PASSWORD=raremark
       - ELASTICSEARCH_URL=elasticsearch
-#      - "ELASTICSEARCH_URL=http://elasticsearch:9200"
-    volumes: 
+    volumes:
       - ./search:/home/admin/searchapp
     ports: 
       - 3001:3001
