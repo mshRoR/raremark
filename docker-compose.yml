@@ -1,6 +1,20 @@
 version: '3.2'
 
-services: 
+services:
+  elasticsearch:
+    image: elasticsearch:7.4.2
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=es-docker-cluster
+      - discovery.type=single-node
+    volumes:
+      - ./esdata:/usr/share/elasticsearch/data
+    networks:
+      - raremark
+    ports:
+      - 9200:9200
+      - 9300:9300
+
   db:
     image: postgres:12
     restart: always
@@ -51,12 +65,16 @@ services:
       - RACK_ENV=development
       - POSTGRES_USER=raremark
       - POSTGRES_PASSWORD=raremark
+      - ELASTICSEARCH_URL=elasticsearch
+#      - "ELASTICSEARCH_URL=http://elasticsearch:9200"
     volumes: 
       - ./search:/home/admin/searchapp
     ports: 
       - 3001:3001
     links: 
       - db
+      - elasticsearch
+    stdin_open: true
     tty: true
     networks: 
       - raremark
@@ -66,4 +84,6 @@ networks:
     driver: "bridge"
 volumes:
   dbdata:
+    driver: "local"
+  esdata:
     driver: "local"

@@ -48,6 +48,9 @@ admin/.cache
 search/.cache
 admin/.irb_history
 search/.irb_history
+admin/yarn.lock
+search/yarn.lock
 
 /dbdata
 /.idea
+/esdata
