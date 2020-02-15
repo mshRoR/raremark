@@ -5,7 +5,6 @@ class CreateProfiles < ActiveRecord::Migration[6.0]
       t.string :gender, null: false, default: '', comment: 'store user gender'
       t.integer :born_year, comment: 'store user born year'
       t.integer :born_month, comment: 'store user born month'
-      t.string :age_range, comment: 'store user age range'
       t.references :country, null: false, foreign_key: true
       t.integer :profile_type, null: false, default: 0, comment: 'store user type (Patient or Carer)'
 

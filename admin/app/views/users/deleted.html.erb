@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Deleted Users</h1>
+
+<table  class="table table-striped">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Type</th>
+    <th>Country</th>
+    <th>Gender</th>
+    <th>Disease</th>
+    <th>Deleted At</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @users.each_with_index do |user, i| %>
+    <tr>
+      <td><%= i + 1 %></td>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.profile.profile_type %></td>
+      <td><%= user.profile.country.iso2 %></td>
+      <td><%= user.profile.gender %></td>
+      <td><%= user.disease_histories.last.disease.name %></td>
+      <td><%= user.deleted_at %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User', new_user_path , class: "btn btn-success" %>

@@ -32,10 +32,11 @@ ActiveRecord::Schema.define(version: 2020_02_14_124628) do
     t.index ["user_id"], name: "index_disease_histories_on_user_id"
   end
 
-  create_table "diseases", force: :cascade do |t|
-    t.string "name"
+  create_table "diseases", comment: "Name of diseases record", force: :cascade do |t|
+    t.string "name", null: false, comment: "Name of disease"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_diseases_on_name"
   end
 
   create_table "profiles", comment: "User profile details", force: :cascade do |t|
