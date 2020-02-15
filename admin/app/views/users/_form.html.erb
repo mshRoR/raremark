@@ -1,0 +1,61 @@
+<%#= get_countries.inspect %>
+
+<%#= app/views/users/_form.html.erb %>
+<%= form_with(model: user, local: true) do %>
+    <!--Body-->
+    <div class="md-form">
+      <i class="fa fa-user prefix"></i>
+      <input type="text" name="user[name]" value="<%= user.name %>" id="user-name" class="form-control" autocomplete="off" required>
+      <label for="user-name" class="">Enter Name</label>
+    </div>
+
+    <div class="md-form">
+      <i class="fa fa-envelope prefix"></i>
+      <input type="email" name="user[email]" value="<%= user.email %>" id="user-email" class="form-control" autocomplete="off" required>
+      <label for="user-email" class="">Enter Email</label>
+    </div>
+
+    <div class="md-form">
+      <i class="fa fa-envelope prefix"></i>
+      <input type="text" name="profile[gender]" value="<%#= user.profile.gender %>" id="profile-gender" class="form-control" autocomplete="off" required>
+      <label for="profile-gender" class="">Select Gender</label>
+    </div>
+
+    <div class="md-form">
+      <i class="fa fa-envelope prefix"></i>
+      <input type="text" name="profile[country_id]" value="<%#= user.profile.gender %>" id="profile-country-id" class="form-control" autocomplete="off" required>
+      <label for="profile-country-id" class="">Select country</label>
+    </div>
+
+    <div class="md-form">
+      <i class="fa fa-envelope prefix"></i>
+      <input type="text" name="profile[born_year]" value="<%#= user.profile.gender %>" id="profile-born-year" class="form-control" autocomplete="off" required>
+      <label for="profile-born-year" class="">Enter Birth Year</label>
+    </div>
+
+    <div class="md-form">
+      <i class="fa fa-envelope prefix"></i>
+      <input type="text" name="profile[born_month]" value="<%#= user.profile.gender %>" id="profile-born-month" class="form-control" autocomplete="off" required>
+      <label for="profile-born-month" class="">Enter Birth Month</label>
+    </div>
+    
+    
+    <div class="md-form">
+      <i class="fa fa-envelope prefix"></i>
+      <input type="text" name="profile[profile_type]" value="<%#= user.profile.gender %>" id="profile-profile-type" class="form-control" autocomplete="off" required>
+      <label for="profile-profile-type" class="">Select Type</label>
+    </div>
+    <div class="md-form">
+      <i class="fa fa-envelope prefix"></i>
+      <input type="text" name="disease_history[disease_id]" value="<%#= user.profile.gender %>" id="disease-history-disease-id" class="form-control" autocomplete="off" required>
+      <label for="disease-history-disease-id" class="">Select Disease</label>
+    </div>
+
+    <%# unless action_name.eql?('edit') %>
+    
+    <%# end %>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-light-blue waves-effect waves-light" data-disable-with="Save">Save</button>
+    </div>
+<% end %>
