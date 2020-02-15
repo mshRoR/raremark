@@ -1,8 +1,14 @@
-<p id="notice"><%= notice %></p>
 
-<h1>Users</h1>
 
-<table>
+  <% flash.each do |type, msg| %>
+    <div class="alert alert-info"  role="alert">
+      <%= msg %>
+    </div>
+  <% end %>
+
+    <h1>Active Users</h1>
+
+<table  class="table table-striped">
   <thead>
     <tr>
       <th>#</th>
@@ -26,9 +32,10 @@
         <td><%= user.profile.country.iso2 %></td>
         <td><%= user.profile.gender %></td>
         <td><%= user.disease_histories.last.disease.name %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', user , class: "btn btn-info" %></td>
+        <td><%= link_to 'Edit', edit_user_path(user), class: "btn btn-primary"%></td>
+        <td><%= link_to 'Suspend', suspend_user_path(user), method: :put, data: { confirm: 'Are you sure?' },  class: "btn btn-warning" %></td>
+        <td><%= link_to 'Delete', delete_user_path(user), method: :put, data: { confirm: 'Are you sure?' },  class: "btn btn-danger" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -36,4 +43,4 @@
 
 <br>
 
-<%= link_to 'New User', new_user_path %>
+<%= link_to 'New User', new_user_path , class: "btn btn-success" %>
