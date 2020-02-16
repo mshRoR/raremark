@@ -25,7 +25,7 @@ WORKDIR ${APP_ROOT}
 RUN gem update --system && \
     gem install bundler
 ADD ./admin/Gemfile* ${APP_ROOT}/
-RUN bundle install && yarn install
+RUN bundle install && npm install && yarn install
 ADD ./admin ${APP_ROOT}
 
 # create app user
