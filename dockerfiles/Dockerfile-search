@@ -38,6 +38,7 @@ RUN groupadd -r ${APP_USER} -g 1000 && \
     chown -R ${APP_USER}:${APP_USER} ${APP_ROOT} && \
     chown -R ${APP_USER}:${APP_USER} /usr/local/bundle/bin/
 USER ${APP_USER}
+RUN mkdir -p ${APP_ROOT}/tmp/pids
 
 #ENTRYPOINT /bin/bash
 #CMD ["true"]
