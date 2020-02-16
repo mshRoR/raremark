@@ -45,9 +45,7 @@ services:
       - POSTGRES_USER=raremark
       - POSTGRES_PASSWORD=raremark
       - ELASTICSEARCH_URL=elasticsearch
-    volumes:
-      - ./admin:/home/admin/adminapp
-    ports: 
+    ports:
       - 3000:3000
     links: 
       - db
@@ -71,14 +69,11 @@ services:
       - POSTGRES_USER=raremark
       - POSTGRES_PASSWORD=raremark
       - ELASTICSEARCH_URL=elasticsearch
-    volumes:
-      - ./search:/home/admin/searchapp
-    ports: 
+    ports:
       - 3001:3001
     links: 
       - db
       - elasticsearch
-    stdin_open: true
     tty: true
     networks: 
       - raremark

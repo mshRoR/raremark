@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:edit, :update, :suspend, :reactivate, :delete ]
+  before_action :set_user, only: [:edit, :update, :suspend, :reactivate, :delete]
 
   # GET    /users
   def index
-    @users = User.includes(:profile => [:country], :disease_histories => [:disease]).where(deleted_at:nil, suspended_at:nil)
+    @users = User.
+        includes(:profile => [:country], :disease_histories => [:disease]).
+        where(deleted_at:nil, suspended_at:nil)
   end
 
   # # GET /users/:id
@@ -44,7 +46,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT  /users/:id
   def update
-    if  @user.assign_attributes(user_params)
+    if  @user.assign_attributes!(user_params)
       @user.update!(user_params)
       flash[:notice] = "User update successful!"
       redirect_to user_path(@user)
