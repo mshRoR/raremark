@@ -1,4 +1,4 @@
-FROM ruby:2.7.0
+FROM ruby:2.5.0
 
 RUN apt-get update -qq && apt-get install -y \
     sudo nano build-essential apt-transport-https apt-utils libxml2-dev libxslt1-dev
@@ -38,7 +38,6 @@ RUN groupadd -r ${APP_USER} -g 1000 && \
     chown -R ${APP_USER}:${APP_USER} ${APP_ROOT} && \
     chown -R ${APP_USER}:${APP_USER} /usr/local/bundle/bin/
 USER ${APP_USER}
-RUN mkdir -p ${APP_ROOT}/tmp/pids
 
 #ENTRYPOINT /bin/bash
 #CMD ["true"]
