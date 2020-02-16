@@ -12,13 +12,6 @@ class User < ApplicationRecord
     accepts_nested_attributes_for(:profile, update_only: true)
     accepts_nested_attributes_for(:disease_histories, update_only: true)
 
-
-
-    # enum status: {
-    #     Active: 1,
-    #     Suspended: 2,
-    #     Deleted: 3
-    # }
     def search_data
         {
             name: name,
@@ -28,6 +21,7 @@ class User < ApplicationRecord
             born_year: profile.born_year,
             born_month: profile.born_month,
             country: profile.country.name,
+            iso2: profile.country.iso2,
             disease: disease_histories.last.disease.name
         }
     end

@@ -1,17 +1,17 @@
 class User < ApplicationRecord
-    # searchkick word_start: [:name, :email]
-    searchkick
+    searchkick callbacks: false
+
     has_one :profile
     has_many :disease_histories
+
     scope :search_import, -> { includes(:disease_histories=> [:disease], :profile=>[:country]) }
+
     validates :email, presence: true
     validates :name, presence: true
 
-    # enum status: {
-    #     Active: 1,
-    #     Suspended: 2,
-    #     Deleted: 3
-    # }
+    accepts_nested_attributes_for(:profile, update_only: true)
+    accepts_nested_attributes_for(:disease_histories, update_only: true)
+
     def search_data
         {
             name: name,
@@ -21,6 +21,7 @@ class User < ApplicationRecord
             born_year: profile.born_year,
             born_month: profile.born_month,
             country: profile.country.name,
+            iso2: profile.country.iso2,
             disease: disease_histories.last.disease.name
         }
     end

@@ -51,6 +51,7 @@ search/.irb_history
 admin/yarn.lock
 search/yarn.lock
 
-/dbdata
+/dbdata/*
+/esdata/*
+!/esdata/.keep
 /.idea
-/esdata
