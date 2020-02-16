@@ -39,6 +39,7 @@ services:
     hostname: reremark-admin
     container_name: raremark_admin
     environment: 
+      - NODE_ENV=development
       - RAILS_ENV=development
       - RACK_ENV=development
       - POSTGRES_USER=raremark
@@ -64,6 +65,7 @@ services:
     hostname: reremark-search
     container_name: raremark_search
     environment:
+      - NODE_ENV=development
       - RAILS_ENV=development
       - RACK_ENV=development
       - POSTGRES_USER=raremark

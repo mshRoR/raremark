@@ -1,4 +1,4 @@
-FROM ruby:2.5.0
+FROM ruby:2.7.0
 
 RUN apt-get update -qq && apt-get install -y \
     sudo nano build-essential apt-transport-https apt-utils libxml2-dev libxslt1-dev
