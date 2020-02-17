@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT  /users/:id
   def update
-    if  @user.assign_attributes!(user_params)
+    if @user.update_attributes!(user_params)
       @user.update!(user_params)
       flash[:notice] = "User update successful!"
       redirect_to user_path(@user)
