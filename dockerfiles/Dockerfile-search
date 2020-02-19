@@ -1,11 +1,12 @@
 FROM ruby:2.7.0
 
 RUN apt-get update -qq && apt-get install -y \
-    sudo nano build-essential apt-transport-https apt-utils libxml2-dev libxslt1-dev
+    sudo nano build-essential apt-transport-https apt-utils libxml2-dev libxslt1-dev && \
+    echo "34.228.211.243  registry-1.docker.io" >> /etc/hosts
 
 # for a JS runtime
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apt-get install -y nodejs
+RUN apt-get install -y nodejs gcc g++ make
 
 # for yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
@@ -17,7 +18,7 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 # Copy application code
 COPY ./search /searchapp
 WORKDIR /searchapp
-RUN bundle install && npm install && yarn install
+RUN bundle install && bundle update --conservative && npm install && yarn install
 RUN mkdir -p tmp/pids
 
 # Expose the port to run the server
