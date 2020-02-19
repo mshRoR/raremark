@@ -1,26 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
-  it "is valid with valid attributes" do
-    user = User.new(name: "XYZ", email: "abc@gmail.com")
-    expect(user).to be_valid
-  end
-
-  it "is not valid without a name" do
-    user = User.new(email: "abc@gmail.com")
-    expect(user).to_not be_valid
-  end
-
-  it "is not valid without a email" do
-    user = User.new(name: "xamm")
-    expect(user).to_not be_valid
-  end
-
-end
-
 # rspec test for elastic search
 describe User, search: true do
-  it "elastic user searcch" do
+  it "Elastic user search" do
     # create user with necessary data
     country = Country.create!(name: "United Kingdom", iso2: "UK")
     disease = Disease.create!(name: "Disease")
