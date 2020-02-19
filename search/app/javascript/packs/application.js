@@ -8,6 +8,8 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require("bootstrap")
+require("chartkick")
+require("chart.js")
 
 // stylesheets
 require("../stylesheets/main.scss")

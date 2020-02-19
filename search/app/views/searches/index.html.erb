@@ -42,6 +42,19 @@
   <% end %>
   </tbody>
 </table>
+<br />
+<div class="row">
+  <div class="col-md-4">
+    <%= pie_chart profile_chart(@users.results.pluck(:id)) %>
+    <%#= pie_chart @users.joins(:profile).group('profiles.gender').count %>
+  </div>
+  # <div class="col-md-4">
+  #   <%#= pie_chart @users.joins(:profile=>[:country]).group('countries.iso2').count %>
+  # </div>
+  # <div class="col-md-4">
+  #   <%#= pie_chart @users.joins(:disease_histories=>[:disease]).group('diseases.name').count %>
+  # </div>
+</div>
 <% else %>
   <h3>No Result Found</h3>
 <% end %>
