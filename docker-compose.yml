@@ -1,88 +1,125 @@
-version: '3.2'
+version: '2.2'
 
 services:
   elasticsearch:
-    image: elasticsearch:7.4.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
+    logging:
+      driver: none
+    container_name: elasticsearch
     environment:
       - node.name=elasticsearch
       - cluster.name=es-docker-cluster
       - discovery.type=single-node
-    user: 1000:1001
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - http.host=0.0.0.0
+      - transport.host=127.0.0.1
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
-      - ./esdata:/usr/share/elasticsearch/data
-    networks:
-      - raremark
+      - es_data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
       - 9300:9300
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 10s
+      timeout: 5s
+      retries: 2
+    networks:
+      - app-search
+
+  redis:
+    image: redis:5-alpine
+    logging:
+      driver: none
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+    networks:
+      - app-search
 
   db:
     image: postgres:12
     restart: always
     volumes: 
-      - ./dbdata:/var/lib/postgresql/data
-    hostname: raremark-db  
-    environment: 
-      - POSTGRES_USER=raremark
-      - POSTGRES_PASSWORD=raremark
-      - POSTGRES_DB=raremark_dev
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=app_search_dev
       - PGDATA=/var/lib/postgresql/data
+    healthcheck:
+      test: "exit 0"
     networks: 
-      - raremark
+      - app-search
+    logging:
+      driver: none
   
   admin:
     restart: always
     build: 
       context: .
       dockerfile: ./dockerfiles/Dockerfile-admin
-    image: raremark_admin:dev
-    hostname: reremark-admin
-    container_name: raremark_admin
-    environment: 
+    environment:
       - NODE_ENV=development
       - RAILS_ENV=development
       - RACK_ENV=development
-      - POSTGRES_USER=raremark
-      - POSTGRES_PASSWORD=raremark
-      - ELASTICSEARCH_URL=elasticsearch
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
     ports:
       - 3000:3000
+    depends_on:
+      db:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
     links: 
       - db
       - elasticsearch
     tty: true
     networks: 
-      - raremark
+      - app-search
   
   search:
     restart: always
     build:
       context: .
       dockerfile: ./dockerfiles/Dockerfile-search
-    image: raremark_search:dev
-    hostname: reremark-search
-    container_name: raremark_search
     environment:
       - NODE_ENV=development
       - RAILS_ENV=development
       - RACK_ENV=development
-      - POSTGRES_USER=raremark
-      - POSTGRES_PASSWORD=raremark
-      - ELASTICSEARCH_URL=elasticsearch
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
     ports:
       - 3001:3001
-    links: 
+    depends_on:
+      db:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+    links:
       - db
+      - admin
       - elasticsearch
     tty: true
     networks: 
-      - raremark
+      - app-search
 
 networks:
-  raremark:
+  app-search:
     driver: "bridge"
 volumes:
-  dbdata:
-    driver: "local"
-  esdata:
-    driver: "local"
+  pg_data:
+    name: pg_shared_data_volume
+  es_data:
+    name: es_shared_data_volume
+  redis_data:
+    name: redis_shared_data_volume

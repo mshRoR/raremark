@@ -4,11 +4,6 @@ class SearchesController < ApplicationController
   def index
     User.reindex
     search = params[:term].present? ? params[:term] : nil
-    @users =
-        if search
-          User.search search
-        else
-          []
-        end
+    @users = search.present? ? User.search(search) : []
   end
 end

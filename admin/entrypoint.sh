@@ -3,4 +3,4 @@
 RAILS_ENV=development rails db:create
 RAILS_ENV=development rails db:migrate
 RAILS_ENV=development rails db:seed
-RAILS_ENV=development bundle exec puma -p 3000 -C config/puma.rb
+RAILS_ENV=development exec bundle exec rails s -p 3000 -b 0.0.0.0

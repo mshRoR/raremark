@@ -9,11 +9,11 @@ default: &default
 
 development:
   <<: *default
-  database: raremark_dev
+  database: app_search_dev
 
 test:
   <<: *default
-  database: raremark_test
+  database: app_search_test
 
 production:
   <<: *default
